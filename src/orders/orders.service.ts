@@ -31,4 +31,8 @@ export class OrdersService {
 
     return order;
   }
+
+  async getOrders(): Promise<OrderEntity[]> {
+    return await this.ordersRepository.find();
+  }
 }

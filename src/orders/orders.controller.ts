@@ -16,4 +16,9 @@ export class OrdersController {
   getOrderById(@Param('id') id: number): Promise<OrderEntity> {
     return this.ordersService.getOrderById(id);
   }
+
+  @Get()
+  getOrders(): Promise<OrderEntity[]> {
+    return this.ordersService.getOrders();
+  }
 }
