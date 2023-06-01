@@ -71,4 +71,24 @@ describe('OrdersService', () => {
       expect(repository.find).toHaveBeenCalled();
     });
   });
+
+  describe('completeOrder', () => {
+    it('should update the order to complete', async () => {
+      const orderId = 1;
+      const order = new OrderEntity();
+      order.id = orderId;
+      order.is_completed = false;
+
+      jest.spyOn(service, 'getOrder').mockResolvedValue(order);
+
+      const saveMock = jest.fn().mockResolvedValue(order);
+      jest.spyOn(repository, 'save').mockImplementation(saveMock);
+
+      const result = await service.completeOrder(orderId);
+
+      expect(result).toEqual(order);
+      expect(order.is_completed).toBe(true);
+      expect(saveMock).toHaveBeenCalledWith(order);
+    });
+  });
 });
