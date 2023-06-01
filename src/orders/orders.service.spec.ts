@@ -41,4 +41,21 @@ describe('OrdersService', () => {
       expect(saveMock).toHaveBeenCalledWith(expect.any(OrderEntity));
     });
   });
+
+  describe('getOrder', () => {
+    it('should return the order with the given id', async () => {
+      const orderId = 1;
+      const order = new OrderEntity();
+      order.id = orderId;
+
+      jest.spyOn(repository, 'findOne').mockResolvedValue(order);
+
+      const result = await service.getOrder(orderId);
+
+      expect(result).toEqual(order);
+      expect(repository.findOne).toHaveBeenCalledWith({
+        where: { id: orderId },
+      });
+    });
+  });
 });
