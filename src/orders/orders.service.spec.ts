@@ -3,6 +3,7 @@ import { OrdersService } from './orders.service';
 import { Repository } from 'typeorm';
 import { OrderEntity } from './entities/order.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { BadRequestException } from '@nestjs/common';
 
 describe('OrdersService', () => {
   let service: OrdersService;
@@ -89,6 +90,19 @@ describe('OrdersService', () => {
       expect(result).toEqual(order);
       expect(order.is_completed).toBe(true);
       expect(saveMock).toHaveBeenCalledWith(order);
+    });
+
+    it('should throw BadRequestException if the order is already completed', async () => {
+      const orderId = 1;
+      const order = new OrderEntity();
+      order.id = orderId;
+      order.is_completed = true;
+
+      jest.spyOn(service, 'getOrder').mockResolvedValue(order);
+
+      await expect(service.completeOrder(orderId)).rejects.toThrowError(
+        BadRequestException,
+      );
     });
   });
 });
