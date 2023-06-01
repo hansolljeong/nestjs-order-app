@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrderEntity } from './entities/order.entity';
@@ -34,5 +38,18 @@ export class OrdersService {
 
   async getOrders(): Promise<OrderEntity[]> {
     return await this.ordersRepository.find();
+  }
+
+  async completeOrder(id: number): Promise<OrderEntity> {
+    const order = await this.getOrder(id);
+
+    if (!order.is_completed) {
+      order.is_completed = true;
+      await this.ordersRepository.save(order);
+    } else {
+      throw new BadRequestException(`Order ${id} is already completed`);
+    }
+
+    return order;
   }
 }
