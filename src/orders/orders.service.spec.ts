@@ -3,7 +3,7 @@ import { OrdersService } from './orders.service';
 import { Repository } from 'typeorm';
 import { OrderEntity } from './entities/order.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 describe('OrdersService', () => {
   let service: OrdersService;
@@ -57,6 +57,16 @@ describe('OrdersService', () => {
       expect(repository.findOne).toHaveBeenCalledWith({
         where: { id: orderId },
       });
+    });
+
+    it('should throw NotFoundException if the order does not exist', async () => {
+      const orderId = 1;
+
+      jest.spyOn(repository, 'findOne').mockResolvedValue(undefined);
+
+      await expect(service.getOrder(orderId)).rejects.toThrowError(
+        NotFoundException,
+      );
     });
   });
 
