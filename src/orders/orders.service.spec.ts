@@ -58,4 +58,17 @@ describe('OrdersService', () => {
       });
     });
   });
+
+  describe('getOrders', () => {
+    it('should return an array of orders', async () => {
+      const orders = [new OrderEntity()];
+
+      jest.spyOn(repository, 'find').mockResolvedValue(orders);
+
+      const result = await service.getOrders();
+
+      expect(result).toEqual(orders);
+      expect(repository.find).toHaveBeenCalled();
+    });
+  });
 });
