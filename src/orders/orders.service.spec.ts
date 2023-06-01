@@ -24,4 +24,21 @@ describe('OrdersService', () => {
       getRepositoryToken(OrderEntity),
     );
   });
+
+  describe('createOrder', () => {
+    it('should create an order', async () => {
+      const createOrderDto = {
+        user_id: 1,
+        total_price: 100,
+      };
+
+      const saveMock = jest.fn().mockResolvedValue(createOrderDto);
+      jest.spyOn(repository, 'save').mockImplementation(saveMock);
+
+      const result = await service.createOrder(createOrderDto);
+
+      expect(result).toEqual(createOrderDto);
+      expect(saveMock).toHaveBeenCalledWith(expect.any(OrderEntity));
+    });
+  });
 });
