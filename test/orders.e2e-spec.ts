@@ -57,23 +57,24 @@ describe('OrderController (e2e)', () => {
           expect(res.body.id).toBe(orderId);
         });
     });
-  });
-  it('PATCH 200', async () => {
-    const createOrderDto = {
-      user_id: 1,
-      total_price: 100,
-    };
-    const createdOrder = await service.createOrder(createOrderDto);
 
-    const orderId = createdOrder.id;
+    it('PATCH 200', async () => {
+      const createOrderDto = {
+        user_id: 1,
+        total_price: 100,
+      };
+      const createdOrder = await service.createOrder(createOrderDto);
 
-    return request(app.getHttpServer())
-      .patch(`/orders/${orderId}`)
-      .expect(200)
-      .expect((res) => {
-        expect(res.body.id).toBe(orderId);
-        expect(res.body.is_completed).toBe(true);
-      });
+      const orderId = createdOrder.id;
+
+      return request(app.getHttpServer())
+        .patch(`/orders/${orderId}`)
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.id).toBe(orderId);
+          expect(res.body.is_completed).toBe(true);
+        });
+    });
   });
 
   afterAll(async () => {
