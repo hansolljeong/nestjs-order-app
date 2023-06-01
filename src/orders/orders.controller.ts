@@ -13,8 +13,8 @@ export class OrdersController {
   }
 
   @Get('/:id')
-  getOrderById(@Param('id') id: number): Promise<OrderEntity> {
-    return this.ordersService.getOrderById(id);
+  getOrder(@Param('id') id: number): Promise<OrderEntity> {
+    return this.ordersService.getOrder(id);
   }
 
   @Get()

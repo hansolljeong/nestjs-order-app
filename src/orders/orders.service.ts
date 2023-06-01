@@ -22,7 +22,7 @@ export class OrdersService {
     return order;
   }
 
-  async getOrderById(id: number): Promise<OrderEntity> {
+  async getOrder(id: number): Promise<OrderEntity> {
     const order = await this.ordersRepository.findOne({ where: { id } });
 
     if (!order) {
