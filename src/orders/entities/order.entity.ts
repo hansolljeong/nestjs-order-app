@@ -14,7 +14,7 @@ export class OrderEntity {
   @Column()
   user_id: number;
 
-  @Column()
+  @Column({ default: false })
   is_completed: boolean;
 
   @Column()
