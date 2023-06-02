@@ -5,6 +5,8 @@ import { OrderEntity } from './entities/order.entity';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
 
@@ -24,16 +26,31 @@ export class OrdersController {
   }
 
   @Get('/:id')
+  @ApiOkResponse({
+    description: 'Called order object',
+    type: OrderEntity,
+  })
+  @ApiNotFoundResponse({ description: 'Cannot find order' })
   getOrder(@Param('id') id: number): Promise<OrderEntity> {
     return this.ordersService.getOrder(id);
   }
 
   @Get()
+  @ApiOkResponse({
+    description: 'Called order objects',
+    type: [OrderEntity],
+  })
   getOrders(): Promise<OrderEntity[]> {
     return this.ordersService.getOrders();
   }
 
   @Patch('/:id')
+  @ApiOkResponse({
+    description: 'Updated order status to completed',
+    type: OrderEntity,
+  })
+  @ApiNotFoundResponse({ description: 'Cannot find order' })
+  @ApiBadRequestResponse({ description: 'Cannot update order' })
   completeOrder(@Param('id') id: number): Promise<OrderEntity> {
     return this.ordersService.completeOrder(id);
   }
