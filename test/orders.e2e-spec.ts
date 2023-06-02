@@ -44,6 +44,18 @@ describe('OrderController (e2e)', () => {
           expect(res.body.total_price).toBe(createOrderDto.total_price);
         });
     });
+
+    it('POST 400 when invalid input', () => {
+      const createOrderDto = {
+        // missing user_id
+        total_price: 100,
+      };
+
+      return request(app.getHttpServer())
+        .post('/orders')
+        .send(createOrderDto)
+        .expect(400);
+    });
   });
 
   describe('/orders/:id', () => {
@@ -55,6 +67,19 @@ describe('OrderController (e2e)', () => {
         .expect(200)
         .expect((res) => {
           expect(res.body.id).toBe(orderId);
+        });
+    });
+
+    it('GET 404 when non-existent id is requested', () => {
+      const nonExistentId = 999;
+
+      return request(app.getHttpServer())
+        .get(`/orders/${nonExistentId}`)
+        .expect(404)
+        .expect((res) => {
+          expect(res.body.message).toBe(
+            `Can't find order with id ${nonExistentId}`,
+          );
         });
     });
 

@@ -22,6 +22,12 @@ export class OrdersService {
     order.user_id = user_id;
     order.total_price = total_price;
 
+    if (!(user_id && total_price) || Object.keys(order).length !== 2) {
+      throw new BadRequestException(
+        'Missing or additional unexpected argument',
+      );
+    }
+
     await this.ordersRepository.save(order);
     return order;
   }
