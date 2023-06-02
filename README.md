@@ -1,36 +1,34 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+## Introduction
+NestJS 프레임워크를 사용하여 만든 간단한 주문 관리 App입니다.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
+현재는 로컬 환경에서 사용 및 테스트가 가능합니다.
 ## Description
+### 구현 사항
+1. 아래 4가지 API를 구현했습니다.
+    - 주문 접수처리 : `user_id`와 `total_price`를 입력하여 주문을 생성합니다.
+    - 주문 완료처리 : 주문의 완료 상태를 `true`로 변경합니다.
+    - 단일 주문조회 : `id`값으로 주문을 불러옵니다.
+    - 주문 목록조회 : 주문 전체를 `Array` 타입으로 불러옵니다.
+2. Unit Test, e2e Test 코드를 작성했습니다.
+3. 테스트를 위한 DB를 docker compose로 간단히 생성할 수 있게 script를 작성하여 세팅했습니다.
+4. 실제 API 구동 테스트는 아래 Start Guide를 따라 Swagger에서 할 수 있습니다.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
+# Start Guide
 ## Installation
 
 ```bash
 $ npm install
 ```
+## Setting for test in `localhost`
+```bash
+# init database
+$ npm run db:docker-up
+
+# .env setting
+$ mv .env_sample .env
+```
+> 13306 포트를 사용하여 테스트할 수 있도록 세팅해놓았습니다.
+다른 포트 번호 사용을 원할 경우 `docker/DB/docker-compose.yml`의 `ports` 부분과 `.env`의 `port`를 원하는 포트 번호로 변경하면 됩니다.
 
 ## Running the app
 
@@ -57,17 +55,5 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+## Swagger API Docs
+`localhost:3000/api`
