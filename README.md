@@ -22,11 +22,11 @@ $ npm install
 ```
 ### Setting for test in `localhost`
 ```bash
-# init database
-$ npm run db:docker-up
-
 # .env setting
 $ mv .env_sample .env
+
+# init database
+$ npm run db:docker-up
 ```
 > 13306 포트를 사용하여 테스트할 수 있도록 세팅해놓았습니다.
 다른 포트 번호 사용을 원할 경우 `docker/DB/docker-compose.yml`의 `ports` 부분과 `.env`의 `port`를 원하는 포트 번호로 변경하면 됩니다.
